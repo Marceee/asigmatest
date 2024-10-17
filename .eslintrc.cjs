@@ -27,7 +27,9 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }]
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    "react/prop-types": 0,
+    'react/jsx-no-target-blank': 'off'
   }
 }
 
