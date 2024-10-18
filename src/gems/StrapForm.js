@@ -20,8 +20,8 @@ const StrapForm = () => {
     console.log('Form Submitted:', formData);
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className='mb-3' controlId='formBasicEmail' style={{ width: '25%' }}>
+    <Form onSubmit={handleSubmit} style={{ width: '25%' }}>
+      <Form.Group className='mb-3' controlId='formBasicEmail'>
         <Form.Label>Email address</Form.Label>
         <Form.Control type='email' placeholder='Enter email' onChange={handleChange} />
         <Form.Text className='text-muted'>We never share your email with anyone else.</Form.Text>
