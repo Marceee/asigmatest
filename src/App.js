@@ -1,7 +1,8 @@
 import './App.css';
 import { Alert, Container, Navbar } from 'react-bootstrap';
-import Counter from './Counter';
-import MultiStepForm from './MultiStepForm';
+import Counter from './gems/Counter';
+import MultiStepForm from './gems/MultiStepForm';
+import StrapForm from './gems/StrapForm';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Counter />
 
         <MultiStepForm />
+
+        <StrapForm />
 
         <Alert dismissible variant='danger' className={'space'}>
           <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
