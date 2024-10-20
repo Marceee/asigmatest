@@ -37,6 +37,7 @@ function TodoApp() {
       const data = await response.json();
       setTodos([...todos, data]);
       setNewTodo('');
+      await fetchToDos();
     } catch (error) {
       alert(`Failed to submit todo: ${error.message}`);
       console.log('error submitting todo', error);
@@ -53,14 +54,15 @@ function TodoApp() {
     setTodos(updatedTodos);
   };
 
-  const handleDelete = async (index) => {
+  const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3001/todos/${index}`, { method: 'DELETE' });
+      await fetch(`http://localhost:3001/todos/${id}`, { method: 'DELETE' });
     } catch (e) {
       console.log('failed to delete ', e);
     }
-    const updatedTodos = todos.filter((todo, i) => i !== index);
-    setTodos(updatedTodos);
+    await fetchToDos();
+    // const updatedTodos = todos.filter((todo, i) => i !== index);
+    // setTodos(updatedTodos);
   };
 
   return (
@@ -94,7 +96,7 @@ function TodoApp() {
                       <Button variant='success' className='mx-2' onClick={() => handleToggle(todo.id)}>
                         {todo.completed ? 'Undo' : 'Done'}
                       </Button>
-                      <Button variant='danger' onClick={() => handleDelete(index)}>
+                      <Button variant='danger' onClick={() => handleDelete(todo.id)}>
                         Delete
                       </Button>
                     </Col>

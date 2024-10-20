@@ -37,6 +37,19 @@ app.get('/todos', (req, res) => {
   });
 });
 
+// Define an API endpoint for deleting a to do
+app.delete('/todos/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    await db.run('DELETE FROM todos WHERE id = ?', id);
+    res.json({ message: 'Todo deleted successfully' });
+  } catch (error) {
+    console.log('error deleting todo', error);
+    res.status(500).json({ message: 'Failed to delete todo' });
+  }
+});
+
 // Define an API endpoint for marking a to do as completed
 app.patch('/todos/:id', (req, res) => {
   const { id } = req.params;
