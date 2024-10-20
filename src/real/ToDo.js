@@ -15,9 +15,9 @@ function TodoApp() {
     try {
       const response = await fetch('http://localhost:3001/todos');
       const data = await response.json();
-      console.log('what in data.  ', data);
       setTodos(data.todos);
     } catch (error) {
+      alert(`Error fetching todos: ${error.message}`);
       console.error(error);
     } finally {
       setLoading(false);
@@ -38,6 +38,7 @@ function TodoApp() {
       setTodos([...todos, data]);
       setNewTodo('');
     } catch (error) {
+      alert(`Failed to submit todo: ${error.message}`);
       console.log('error submitting todo', error);
     }
   };
@@ -48,7 +49,7 @@ function TodoApp() {
     } catch (e) {
       console.log('failed to toggle ', e);
     }
-    const updatedTodos = todos.map((todo) => (todo.id ? { ...todo, completed: !todo.completed } : todo));
+    const updatedTodos = todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo));
     setTodos(updatedTodos);
   };
 
@@ -65,8 +66,9 @@ function TodoApp() {
   return (
     <Container className='mt-5'>
       <Row>
-        <Col xs={12} md={6} lg={4} xl={3}>
+        <Col xs={12} md={6} lg={4} xl={8}>
           <h1>To Do App</h1>
+
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId='newTodo'>
               <Form.Control type='text' value={newTodo} onChange={(e) => setNewTodo(e.target.value)} placeholder='Add new todo' />
@@ -81,13 +83,22 @@ function TodoApp() {
             <ListGroup>
               {todos.map((todo, index) => (
                 <ListGroupItem key={index}>
-                  <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>{todo.text}</span>
-                  <Button variant='success' className='float-right' onClick={() => handleToggle(index)}>
-                    {todo.completed ? 'Undo' : 'Done'}
-                  </Button>
-                  <Button variant='danger' className='float-right mr-2' onClick={() => handleDelete(index)}>
-                    Delete
-                  </Button>
+                  <Row className='align-items-center'>
+                    {/* Todo Text */}
+                    <Col xs={8} className='text-truncate'>
+                      <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>{todo.text}</span>
+                    </Col>
+
+                    {/* Action Buttons */}
+                    <Col xs={4} className='d-flex justify-content-end'>
+                      <Button variant='success' className='mx-2' onClick={() => handleToggle(todo.id)}>
+                        {todo.completed ? 'Undo' : 'Done'}
+                      </Button>
+                      <Button variant='danger' onClick={() => handleDelete(index)}>
+                        Delete
+                      </Button>
+                    </Col>
+                  </Row>
                 </ListGroupItem>
               ))}
             </ListGroup>
